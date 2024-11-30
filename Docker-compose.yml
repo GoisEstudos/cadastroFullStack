@@ -1,0 +1,22 @@
+version: '3.8'  # Você pode remover essa linha para evitar o warning
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb  # Banco de dados em memória
+      SPRING_DATASOURCE_DRIVER_CLASSNAME: org.h2.Driver
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.H2Dialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update  # Atualiza o esquema do banco automaticamente
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"  # Usando a porta padrão do Vite
+    # Não é necessário `depends_on` aqui, porque o frontend não depende diretamente do backend
